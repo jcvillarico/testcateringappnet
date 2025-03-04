@@ -6,6 +6,7 @@
 package cateringsystem;
 
 import admin.adminDashboard;
+import admin.usersForm;
 import config.dbConnector;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,13 +24,28 @@ public class loginForm extends javax.swing.JFrame {
     public loginForm() {
         initComponents();
     }
+    static String status;
+    static String type;
+
     
     public static boolean loginAcc(String username, String password){
         dbConnector connector = new dbConnector();
         try{
             String query = "SELECT * FROM tbl_user  WHERE u_username = '" + username + "' AND u_password = '" + password + "'";
             ResultSet resultSet = connector.getData(query);
-            return resultSet.next();
+            if(resultSet.next()){
+               status = resultSet.getString("u_status"); 
+               type = resultSet.getString("u_type"); 
+
+                
+                return true;
+            
+            }else{
+            
+                return false;
+            }
+            
+            
         }catch (SQLException ex) {
             return false;
         }
@@ -46,7 +62,6 @@ public class loginForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         exit1 = new javax.swing.JLabel();
@@ -59,21 +74,20 @@ public class loginForm extends javax.swing.JFrame {
         exit2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Catering-logo-vector-icon-illustration-Graphics-68140048-1-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(-130, 50, 460, 310));
-
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("WELCOME TO CATERING SERVICE SYSTEM");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 410, 30));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 410, 30));
 
         exit1.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 36)); // NOI18N
         exit1.setText("X");
@@ -84,30 +98,31 @@ public class loginForm extends javax.swing.JFrame {
         });
         jPanel2.add(exit1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 640, 50));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 50));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("Password:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 220, 80, 30));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, 80, 30));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
-        jLabel4.setText("LOGIN FORM");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 140, 30));
+        jLabel4.setFont(new java.awt.Font("Arial", 1, 24)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("LOG IN");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 100, 100, 30));
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel5.setText("Username:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 80, 30));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 80, 30));
 
         user.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jPanel1.add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 170, 150, 30));
+        jPanel1.add(user, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 150, 30));
 
         pass.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passActionPerformed(evt);
             }
         });
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 220, 150, 30));
+        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 240, 150, 30));
 
         login.setText("Login");
         login.addActionListener(new java.awt.event.ActionListener() {
@@ -115,7 +130,7 @@ public class loginForm extends javax.swing.JFrame {
                 loginActionPerformed(evt);
             }
         });
-        jPanel1.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 260, 70, -1));
+        jPanel1.add(login, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 280, 70, -1));
 
         exit2.setText("Exit");
         exit2.addActionListener(new java.awt.event.ActionListener() {
@@ -123,7 +138,7 @@ public class loginForm extends javax.swing.JFrame {
                 exit2ActionPerformed(evt);
             }
         });
-        jPanel1.add(exit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 70, -1));
+        jPanel1.add(exit2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 280, 70, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setText("Dont have an account? Click here to register");
@@ -132,20 +147,25 @@ public class loginForm extends javax.swing.JFrame {
                 jLabel7MouseClicked(evt);
             }
         });
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 310, 260, -1));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 260, -1));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/ble-removebg-preview.png"))); // NOI18N
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 50, 250, 330));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 250, 330));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/catering icon edit.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, 360));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 731, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -157,13 +177,31 @@ public class loginForm extends javax.swing.JFrame {
     }//GEN-LAST:event_exit1MouseClicked
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
+         
            if(loginAcc(user.getText(),pass.getText())){
-               JOptionPane.showMessageDialog(null,"Login Success!");
-               adminDashboard ads = new adminDashboard();
-               ads.setVisible(true);
-               this.dispose();
-           }else{
-               JOptionPane.showMessageDialog(null,"Login Failed!");
+               
+               if(!status.equals("Active")){
+                   
+               JOptionPane.showMessageDialog(null,"Inactive Account.Contact the Admin!");
+               
+               }else{
+                JOptionPane.showMessageDialog(null,"Login Success!");
+                if(type.equals("Admin")){
+                    JOptionPane.showMessageDialog(null,"Login Success!");
+                     adminDashboard ads = new adminDashboard();
+                     ads.setVisible(true);
+                     this.dispose();
+                }else if(type.equals("User")){
+                    JOptionPane.showMessageDialog(null,"Login Success!");
+                    usersForm usd = new usersForm();
+                     usd.setVisible(true);
+                     this.dispose();
+                }else{
+                      JOptionPane.showMessageDialog(null,"No account type found. Contact the Admin!");
+                }
+               }
+          }else{
+               JOptionPane.showMessageDialog(null,"Invalid Account. PAGHIMO!");
            
            }
     }//GEN-LAST:event_loginActionPerformed

@@ -6,6 +6,8 @@
 package cateringsystem;
 
 import config.dbConnector;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,40 @@ public class registrationForm extends javax.swing.JFrame {
     public registrationForm() {
         initComponents();
     }
+    
+    public static String email,usname;
+    public boolean duplicateCheck(){
+    
+    dbConnector dbc = new dbConnector();
+    
+    try{
+     String query = "SELECT * FROM tbl_user  WHERE u_username = '" +contact.getText()+ "' OR u_email = '" +em.getText()+ "'";
+            ResultSet resultSet = dbc.getData(query);
+            
+            if(resultSet.next()){
+                email = resultSet.getString("u_email");           
+                if(email.equals(em.getText())){
+                JOptionPane.showMessageDialog(null,"Email is Already used!");
+                em.setText("");
+                }
+                
+                usname = resultSet.getString("u_username");
+                if(usname.equals(contact.getText())){
+                JOptionPane.showMessageDialog(null,"Username is Already used!");
+                contact.setText("");
+                }
+                
+                return true;
+            }else{
+            return false;
+            }
+    }catch(SQLException ex){
+        System.out.println(""+ex);
+        return false;
+    
+    }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,6 +66,7 @@ public class registrationForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cps1 = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -38,8 +75,7 @@ public class registrationForm extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        un = new javax.swing.JTextField();
-        cps = new javax.swing.JPasswordField();
+        contact = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -54,6 +90,16 @@ public class registrationForm extends javax.swing.JFrame {
         register = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
+        cps = new javax.swing.JPasswordField();
+        un = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+
+        cps1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cps1ActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,7 +125,7 @@ public class registrationForm extends javax.swing.JFrame {
         });
         jPanel2.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 50));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 50));
 
         jLabel3.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         jLabel3.setText("User Type:");
@@ -91,18 +137,11 @@ public class registrationForm extends javax.swing.JFrame {
 
         jLabel5.setBackground(new java.awt.Color(255, 255, 255));
         jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setText("Confirm Pass:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, 100, 30));
+        jLabel5.setText("Contact Num:");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 370, 100, 30));
 
-        un.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
-        jPanel1.add(un, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 150, 30));
-
-        cps.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cpsActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cps, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 330, 150, 30));
+        contact.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jPanel1.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, 150, 30));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/ble-removebg-preview.png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 250, 330));
@@ -142,7 +181,7 @@ public class registrationForm extends javax.swing.JFrame {
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 290, 80, 30));
         jPanel1.add(ps, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 290, 150, 30));
 
-        ut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select", "Admin", "User" }));
+        ut.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
         jPanel1.add(ut, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 260, 150, -1));
 
         register.setText("Register");
@@ -151,7 +190,7 @@ public class registrationForm extends javax.swing.JFrame {
                 registerActionPerformed(evt);
             }
         });
-        jPanel1.add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 380, -1, -1));
+        jPanel1.add(register, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 410, -1, -1));
 
         cancel.setText("Cancel");
         cancel.addActionListener(new java.awt.event.ActionListener() {
@@ -159,21 +198,37 @@ public class registrationForm extends javax.swing.JFrame {
                 cancelActionPerformed(evt);
             }
         });
-        jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 380, 70, -1));
+        jPanel1.add(cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 410, 70, -1));
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 320, 370));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 320, 410));
+
+        jLabel12.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel12.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jLabel12.setText("Confirm Pass:");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, 100, 30));
+
+        cps.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cpsActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cps, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 330, 150, 30));
+
+        un.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jPanel1.add(un, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 150, 30));
+        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 70, 330, 350));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 648, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -184,10 +239,6 @@ public class registrationForm extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_exitMouseClicked
 
-    private void cpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cpsActionPerformed
-
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         loginForm lfm = new loginForm();
         lfm.setVisible(true);
@@ -197,30 +248,45 @@ public class registrationForm extends javax.swing.JFrame {
 
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
         
-        dbConnector dbc = new dbConnector();
-        if(dbc.insertData("INSERT INTO tbl_user(u_fname,u_lname,u_type,u_email,u_username,u_password,u_cpassword,u_status)"
-                + "VALUES('"+fn.getText()+"','"+ln.getText()+"','"+ut.getSelectedItem()+"','"+em.getText()+"','"+un.getText()+"','"+ps.getText()+"','"+cps.getText()+"','Pending')"))
+        if(fn.getText().isEmpty()||ln.getText().isEmpty()||em.getText().isEmpty()
+                ||contact.getText().isEmpty()||ps.getText().isEmpty()||cps.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"All fields are Required!");  
+        
+        }else if(ps.getText().length()<8){
+            JOptionPane.showMessageDialog(null,"Password should be 8 above!");
+            ps.setText("");
+            cps.setText("");
+        
+        }else if(duplicateCheck()){
+            System.out.println("Duplicate Exist!");
+        
+        }else{
+             dbConnector dbc = new dbConnector();
+      
+        if(dbc.insertData("INSERT INTO tbl_user(u_fname,u_lname,u_type,u_email,u_username,u_contact,u_password,u_cpassword,u_status)"
+                + "VALUES('"+fn.getText()+"','"+ln.getText()+"','"+ut.getSelectedItem()+"','"+em.getText()+"','"+un.getText()+"','"+contact.getText()+"','"+ps.getText()+"','"+cps.getText()+"','Pending')"))
         {
             JOptionPane.showMessageDialog(null,"Inserted Successfully");
             loginForm lfr = new loginForm();
             lfr.setVisible(true);
             this.dispose();
-            
+    }else{
+            JOptionPane.showMessageDialog(null,"Connection Error!");
         }
-            
+        }
         
-        
-        
-     
        
-        
-        
-        
-        
-        if(fn.getText().isEmpty() || ln.getText().isEmpty()|| em.getText().isEmpty()|| un.getText().isEmpty()|| ps.getText().isEmpty()|| cps.getText().isEmpty() || ut.getSelectedIndex() == 0){
-            JOptionPane.showMessageDialog(null,"All fields are Required!");
-        }
+      
+      
     }//GEN-LAST:event_registerActionPerformed
+
+    private void cps1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cps1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cps1ActionPerformed
+
+    private void cpsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cpsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cpsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,13 +325,17 @@ public class registrationForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
+    private javax.swing.JTextField contact;
     private javax.swing.JPasswordField cps;
+    private javax.swing.JPasswordField cps1;
     private javax.swing.JTextField em;
     private javax.swing.JLabel exit;
     private javax.swing.JTextField fn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
