@@ -54,7 +54,7 @@ public class usersForm extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         usersback = new javax.swing.JLabel();
-        exit = new javax.swing.JLabel();
+        logoutuser = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -69,35 +69,38 @@ public class usersForm extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+        jPanel2.setBackground(new java.awt.Color(102, 51, 0));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        usersback.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        usersback.setFont(new java.awt.Font("Bahnschrift", 1, 14)); // NOI18N
         usersback.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        usersback.setText("BACK");
+        usersback.setText("GO BACK TO ADMIN");
         usersback.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 usersbackMouseClicked(evt);
             }
-        });
-        jPanel2.add(usersback, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, 130, 30));
-
-        exit.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 36)); // NOI18N
-        exit.setText("X");
-        exit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                exitMouseClicked(evt);
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                usersbackMouseEntered(evt);
             }
         });
-        jPanel2.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 30));
+        jPanel2.add(usersback, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 10, 200, 30));
 
-        jLabel5.setFont(new java.awt.Font("Bahnschrift", 1, 18)); // NOI18N
+        logoutuser.setFont(new java.awt.Font("Tw Cen MT Condensed Extra Bold", 1, 18)); // NOI18N
+        logoutuser.setText("LOGOUT");
+        logoutuser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutuserMouseClicked(evt);
+            }
+        });
+        jPanel2.add(logoutuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 30));
+
+        jLabel5.setFont(new java.awt.Font("Bahnschrift", 1, 24)); // NOI18N
         jLabel5.setText("USERS FORM");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, 160, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 650, 50));
 
-        jPanel3.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel3.setBackground(new java.awt.Color(153, 102, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/ble-removebg-preview.png"))); // NOI18N
@@ -142,17 +145,25 @@ public class usersForm extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void exitMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_exitMouseClicked
+    private void logoutuserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutuserMouseClicked
+        loginForm usf = new loginForm();
+        usf.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_exitMouseClicked
+    }//GEN-LAST:event_logoutuserMouseClicked
 
     private void usersbackMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersbackMouseClicked
         adminDashboard lfm = new adminDashboard();
         lfm.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_usersbackMouseClicked
+
+    private void usersbackMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usersbackMouseEntered
+
+        
+    }//GEN-LAST:event_usersbackMouseEntered
 
     /**
      * @param args the command line arguments
@@ -190,7 +201,6 @@ public class usersForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -200,6 +210,7 @@ public class usersForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel logoutuser;
     private javax.swing.JTable usersTable;
     private javax.swing.JLabel usersback;
     // End of variables declaration//GEN-END:variables

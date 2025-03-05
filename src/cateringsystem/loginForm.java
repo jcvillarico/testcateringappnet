@@ -5,6 +5,7 @@
  */
 package cateringsystem;
 
+import User.userDashboard;
 import admin.adminDashboard;
 import admin.usersForm;
 import config.dbConnector;
@@ -193,7 +194,7 @@ public class loginForm extends javax.swing.JFrame {
                      this.dispose();
                 }else if(type.equals("User")){
                     JOptionPane.showMessageDialog(null,"Login Success!");
-                    usersForm usd = new usersForm();
+                    userDashboard usd = new userDashboard();
                      usd.setVisible(true);
                      this.dispose();
                 }else{
